@@ -1,0 +1,35 @@
+button{
+	
+	color: white;
+	background-color: hsl(120, 100%, 50%);
+	border-radius: 5px;
+	border: none;
+	padding: 8px 15px;
+	
+	
+}
+
+#response{
+	padding: 10px;
+	background-color: black;
+	height: 0;
+	width: 80%;
+	padding-bottom: 50%;
+	color: #39FF14;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.form input{
+	padding: 5px 10px;
+	border-radius: 7px;
+	border-width: thin;
+}
+
+.form button:hover{
+	background-color: hsl(120, 100%, 40%);
+}
+
+#resp {
+	text-align: center;
+}
