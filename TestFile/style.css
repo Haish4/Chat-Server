@@ -28,6 +28,7 @@ button{
 
 .form button:hover{
 	background-color: hsl(120, 100%, 40%);
+	cursor: pointer;
 }
 
 #resp {
