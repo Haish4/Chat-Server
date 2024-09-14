@@ -1,0 +1,85 @@
+<!Doctype html>
+<html>
+
+<head>
+<title>Chat Front</title>
+</head>
+
+<body>
+
+	<input type="text" placeholder="user id" id="id"/>
+	<button id="start">
+	Start
+	</button>
+	<br/><br/>
+	
+	<input id="message" placeholder="message"/>
+	<input id="to" placeholder="to"/>
+	<button id="send">Send<br>
+	<button/>
+
+	<hr />
+
+
+	<h4>Response:</h4>
+
+	<div style="padding: 10px; background-color: black; height: 400px; width:600px; color: #39FF14;" id="response">
+	
+	
+	</div>
+	<script>
+	
+	var ws = null;
+	
+	let connect = document.getElementById("start");
+	let send = document.getElementById("send");
+	
+	
+	connect.addEventListener("click", function(){
+		let id = document.getElementById("id").value;
+		startServer(id);
+	});
+	
+	send.addEventListener("click", function(){
+		let message = document.getElementById("message").value;
+		let to = document.getElementById("to").value;
+		
+		if(ws != null){
+			ws.send(JSON.stringify({
+				message: message,
+				to: to
+			}));
+		}else{
+			alert("No connection started");
+	}
+	});
+	
+	
+	
+	function startServer(id = ""){
+		let res = document.getElementById("response");
+		ws = new WebSocket("ws://localhost:8000/"+ id);
+		
+		ws.onopen = function(){
+			res.innerHTML += ws.url.substring(20) + " is online.<br />";
+		};
+		
+		ws.onmessage = function(data){
+		let m = data.data;
+		res.innerHTML += m + "<br />";
+		};
+		
+		ws.onclose = function(){
+		res.innerHTML += "Disconnect from server<br />";
+		};
+		
+		ws.onerror = function(){
+		res.innerHTML += "Error<br />";
+		};
+	}
+	
+	
+	</script>
+	</body>
+
+</html>
