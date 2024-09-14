@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "ftp-client": "^0.2.2",
+    "mysql": "^2.18.1",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.48.0"
+  }
+}
