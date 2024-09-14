@@ -38,8 +38,19 @@ function startServer(){
 			);
 		},
 		open: async (ws) => {
+			
+			let userId = ws.url.substr(1);
+			
 			users[ws.url] = ws;
 			console.log(ws.url.substring(1) + " connected to server. ");
+		
+			db.query("INSERT INTO sessions (s_userId, s_server, s_port) VALUES(?, ?, ?)",
+			[userId, "chat", port],
+			function(){
+				
+			});
+			
+		
 		},
 		message: async (ws, message, isBinary) => {
 			let decoder = new TextDecoder("utf-8");
@@ -51,17 +62,25 @@ function startServer(){
 			
 			if(to == "/"){
 					for(let i in users){
-							users[i].send(from.substring(1) + " said: " + m);
+							users[i].send(from.substring(1) + " said to everyone: " + mobj.message);
 						}
 				}else{
-				users[from].send(from.substring(1) + " said: " + m);
+				users[from].send(from.substring(1) + " said: " + mobj.message);
 				
 				if(users[to] != undefined){
-						users[to].send(from.substring(1) + " said: " + m);
+						users[to].send(from.substring(1) + " said: " + mobj.message);
 				}
 			}
 		},
 		close: async (ws) => {
+			let userId = ws.url.substr(1);
+			
+			db.query("DELETE FROM sessions WHERE s_userId = ?", 
+			[userId],
+			function(){
+				
+			});
+			
 			console.log(ws.url.substring(1) + " disconnected from server");
 		},
 	})
